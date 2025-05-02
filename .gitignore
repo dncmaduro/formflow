@@ -1,0 +1,18 @@
+# global OS stuff
+.DS_Store
+Thumbs.db
+
+# global editor stuff
+.idea/
+.vscode/
+*.swp
+
+# global node
+node_modules/
+
+# log files
+*.log
+
+# env files
+.env
+.env.*
