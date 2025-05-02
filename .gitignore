@@ -16,3 +16,8 @@ node_modules/
 # env files
 .env
 .env.*
+
+# formflow-fe
+formflow-fe/dist
+formflow-fe/node_modules
+formflow-fe/.env
