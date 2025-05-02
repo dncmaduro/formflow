@@ -10,6 +10,13 @@ import { ModalsProvider } from '@mantine/modals'
 import { createTheme, MantineProvider } from '@mantine/core'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+import './App.css'
+import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
+import '@mantine/carousel/styles.css'
+import '@mantine/dates/styles.css'
+import './index.css'
+
 const router = createRouter({ routeTree, history: createBrowserHistory() })
 
 const theme = createTheme({
