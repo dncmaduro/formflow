@@ -491,6 +491,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@mantine/carousel@^7.17.7":
+  version "7.17.7"
+  resolved "https://registry.yarnpkg.com/@mantine/carousel/-/carousel-7.17.7.tgz#85dab36be87a31af1ad2924051dc14eddf43caf3"
+  integrity sha512-co1T99h7XSCjcv3NYjMRB4eNEfbYEIorJGZxBastrOQM+ldU3iIVb2dJaqwODEroVyrYF9bwGlTr9lXt7AFLHQ==
+
 "@mantine/core@^7.17.7":
   version "7.17.7"
   resolved "https://registry.yarnpkg.com/@mantine/core/-/core-7.17.7.tgz#b873666f2aa8ab7af3ce47db4e34f1bd5d808829"
