@@ -1,6 +1,5 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { RegisterRequest, LoginRequest, ForgotPasswordRequest, ResetPasswordRequest } from 'src/types/models';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ForgotPasswordDto, LoginDto, RegisterDto, ResetPasswordDto } from 'src/types/dto';
 
