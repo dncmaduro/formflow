@@ -70,7 +70,7 @@ export class AuthService {
 
       return { message: 'Password reset successful' };
     } catch (err) {
-      console.error(err)
+      console.error(err);
       throw new BadRequestException('Invalid or expired token');
     }
   }
