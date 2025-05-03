@@ -1,8 +1,10 @@
-import { Box, Button, Divider, Group, PasswordInput, Stack, Text, TextInput } from '@mantine/core'
+import { Box, Button, Divider, Group, PasswordInput, Stack, TextInput } from '@mantine/core'
 import { Controller, useForm } from 'react-hook-form'
 import { FIcon } from '../FIcon'
 import { useDisclosure } from '@mantine/hooks'
-import { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
+import { authService } from '../../services/auth-service'
+import { FToast } from '../FToast'
 
 type RegisterType = {
   username: string
@@ -13,8 +15,7 @@ type RegisterType = {
 
 export const RegisterForm = () => {
   const [showPassword, { toggle: togglePassword }] = useDisclosure(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const { register } = authService()
 
   const {
     handleSubmit,
@@ -32,21 +33,22 @@ export const RegisterForm = () => {
 
   const password = watch('password')
 
-  const submit = async (values: RegisterType) => {
-    setLoading(true)
-    setError('')
-
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      console.log(values)
-      // TODO: Implement actual registration logic
-    } catch (err) {
-      console.error(err)
-      setError('Registration failed. Please try again.')
-    } finally {
-      setLoading(false)
+  const { mutate: mutateRegister, isPending: isRegisterPending } = useMutation({
+    mutationFn: (req: RegisterType) => register(req),
+    onSuccess: () => {
+      FToast.success({
+        title: 'Registration Successful'
+      })
+    },
+    onError: () => {
+      FToast.error({
+        title: 'Registration Failed'
+      })
     }
+  })
+
+  const submit = (values: RegisterType) => {
+    mutateRegister(values)
   }
 
   return (
@@ -110,13 +112,7 @@ export const RegisterForm = () => {
             )}
           />
 
-          {error && (
-            <Text color="red" size="sm">
-              {error}
-            </Text>
-          )}
-
-          <Button type="submit" loading={loading} className="mt-4">
+          <Button type="submit" loading={isRegisterPending} className="mt-4">
             Register
           </Button>
 
