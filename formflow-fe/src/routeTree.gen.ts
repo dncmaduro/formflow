@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthIndexImport } from './routes/auth/index'
+import { Route as ActivateAccountIndexImport } from './routes/activate-account/index'
 
 // Create/Update Routes
 
@@ -28,6 +29,12 @@ const AuthIndexRoute = AuthIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ActivateAccountIndexRoute = ActivateAccountIndexImport.update({
+  id: '/activate-account/',
+  path: '/activate-account/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -37,6 +44,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/activate-account/': {
+      id: '/activate-account/'
+      path: '/activate-account'
+      fullPath: '/activate-account'
+      preLoaderRoute: typeof ActivateAccountIndexImport
       parentRoute: typeof rootRoute
     }
     '/auth/': {
@@ -53,36 +67,41 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activate-account': typeof ActivateAccountIndexRoute
   '/auth': typeof AuthIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activate-account': typeof ActivateAccountIndexRoute
   '/auth': typeof AuthIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/activate-account/': typeof ActivateAccountIndexRoute
   '/auth/': typeof AuthIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth'
+  fullPaths: '/' | '/activate-account' | '/auth'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth'
-  id: '__root__' | '/' | '/auth/'
+  to: '/' | '/activate-account' | '/auth'
+  id: '__root__' | '/' | '/activate-account/' | '/auth/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActivateAccountIndexRoute: typeof ActivateAccountIndexRoute
   AuthIndexRoute: typeof AuthIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActivateAccountIndexRoute: ActivateAccountIndexRoute,
   AuthIndexRoute: AuthIndexRoute,
 }
 
@@ -97,11 +116,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/activate-account/",
         "/auth/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/activate-account/": {
+      "filePath": "activate-account/index.tsx"
     },
     "/auth/": {
       "filePath": "auth/index.tsx"
