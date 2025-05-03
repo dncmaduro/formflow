@@ -31,3 +31,8 @@ export class ResetPasswordDto {
   @ApiProperty()
   newPassword: string;
 }
+
+export class ActivateAccountDto {
+  @ApiProperty()
+  token: string;
+}

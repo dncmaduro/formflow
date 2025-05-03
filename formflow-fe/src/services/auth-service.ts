@@ -1,4 +1,11 @@
-import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../types/models'
+import {
+  ActivateAccountRequest,
+  ActivateAccountResponse,
+  LoginRequest,
+  LoginResponse,
+  RegisterRequest,
+  RegisterResponse
+} from '../types/models'
 import { callApi } from '../utils/call-api'
 
 export const authService = () => {
@@ -18,5 +25,13 @@ export const authService = () => {
     })
   }
 
-  return { login, register }
+  const activateAccount = (req: ActivateAccountRequest) => {
+    return callApi<ActivateAccountRequest, ActivateAccountResponse>({
+      method: 'POST',
+      path: '/auth/activate-account',
+      data: req
+    })
+  }
+
+  return { login, register, activateAccount }
 }
