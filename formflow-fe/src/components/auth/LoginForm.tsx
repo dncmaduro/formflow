@@ -1,10 +1,11 @@
-import { Box, Button, PasswordInput, Stack, TextInput } from '@mantine/core'
+import { Box, Button, Group, PasswordInput, Stack, TextInput, Text } from '@mantine/core'
 import { Controller, useForm } from 'react-hook-form'
 import { useDisclosure } from '@mantine/hooks'
 import { authService } from '../../services/auth-service'
 import { useMutation } from '@tanstack/react-query'
 import { FToast } from '../FToast'
 import { useAuthStore } from '../../store/auth-store'
+import { Link } from '@tanstack/react-router'
 
 type LoginType = {
   username: string
@@ -61,6 +62,7 @@ export const LoginForm = () => {
           <Controller
             control={control}
             name="password"
+            rules={{ required: 'Password is required' }}
             render={({ field }) => (
               <PasswordInput
                 {...field}
@@ -72,6 +74,11 @@ export const LoginForm = () => {
               />
             )}
           />
+          <Group justify="right" mt="-xs">
+            <Text component={Link} to="/forgot-password/" size="xs" className="text-indigo-600 hover:underline">
+              Forgot password?
+            </Text>
+          </Group>
           <Button type="submit" loading={isLoginPending} className="mt-4">
             Login
           </Button>

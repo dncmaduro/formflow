@@ -31,8 +31,6 @@ export class AuthService {
     const existing = await this.userRepository.findOne({ where: [{ email }, { username }] });
     if (existing) throw new BadRequestException('Email or username already exists');
 
-    console.log(process.env.GMAIL_PASSWORD);
-
     const hashed = await bcrypt.hash(password, 10);
     const user = this.userRepository.create({
       email,
@@ -102,8 +100,23 @@ export class AuthService {
 
     const resetToken = this.jwtService.sign({ sub: user.id }, { expiresIn: '15m' });
 
-    // TODO: Send resetToken via email (simulate log in console for dev)
-    console.log(`RESET LINK: https://your-frontend.com/reset-password?token=${resetToken}`);
+    try {
+      await transporter.sendMail({
+        from: process.env.GMAIL_USER,
+        to: email,
+        subject: 'Reset your FormFlow password',
+        html: `
+          <h1>Password Reset Request</h1>
+          <p>Click the link below to reset your password:</p>
+          <a href="${process.env.FRONTEND_URL}/reset-password?token=${resetToken}">
+            Reset Password
+          </a>
+          <p>If you didn’t request this, ignore this email.</p>
+        `,
+      });
+    } catch (err) {
+      console.warn('Failed to send reset email:', err);
+    }
 
     return { message: 'Reset link sent to email' };
   }

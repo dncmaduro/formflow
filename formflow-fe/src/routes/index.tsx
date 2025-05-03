@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   Button,
   Container,
@@ -11,10 +11,12 @@ import {
   AppShell,
   Flex,
   Stack,
-  Anchor
+  Anchor,
+  Image
 } from '@mantine/core'
 import { FIcon } from '../components/FIcon'
 import { ReactTyped } from 'react-typed'
+import Logo from '../public/formflow.png'
 
 export const Route = createFileRoute('/')({
   component: RouteComponent
@@ -22,10 +24,34 @@ export const Route = createFileRoute('/')({
 
 function RouteComponent() {
   const steps = [
-    { icon: 'FileText', color: 'indigo', text: 'Create Questions' },
-    { icon: 'ArrowFork', color: 'green', text: 'Add Conditions' },
-    { icon: 'ChartBar', color: 'red', text: 'Share & Collect' },
-    { icon: 'ChartLine', color: 'blue', text: 'Analyze Results' }
+    {
+      icon: 'FileText',
+      bgColor: 'bg-indigo-100',
+      text: 'Create Questions',
+      textColor: 'text-indigo-600',
+      iconColor: 'text-indigo-600'
+    },
+    {
+      icon: 'ArrowFork',
+      bgColor: 'bg-green-100',
+      text: 'Add Conditions',
+      textColor: 'text-green-600',
+      iconColor: 'text-green-600'
+    },
+    {
+      icon: 'ChartBar',
+      bgColor: 'bg-red-100',
+      text: 'Share & Collect',
+      textColor: 'text-red-600',
+      iconColor: 'text-red-600'
+    },
+    {
+      icon: 'ChartLine',
+      bgColor: 'bg-blue-100',
+      text: 'Analyze Results',
+      textColor: 'text-blue-600',
+      iconColor: 'text-blue-600'
+    }
   ]
 
   return (
@@ -57,9 +83,10 @@ function RouteComponent() {
             />
             <Container size="lg" style={{ position: 'relative', zIndex: 1 }}>
               <Box ta="center" maw={700} mx="auto">
-                <Title order={1} mb="md" fz={{ base: 36, sm: 48 }} fw={900}>
+                {/* <Title order={1} mb="md" fz={{ base: 36, sm: 48 }} fw={900}>
                   FormFlow
-                </Title>
+                </Title> */}
+                <Image src={Logo} />
                 <Text mb="xl" fz={{ base: 20, sm: 24 }}>
                   <ReactTyped
                     strings={['Build smart forms in minutes', 'Personalize your surveys effortlessly']}
@@ -71,6 +98,8 @@ function RouteComponent() {
                 <Group justify="center" gap="md">
                   <Button
                     size="lg"
+                    component={Link}
+                    to="/auth"
                     variant="gradient"
                     gradient={{ from: 'green', to: 'lime', deg: 105 }}
                     radius="xl"
@@ -110,16 +139,12 @@ function RouteComponent() {
                       <Flex
                         justify="center"
                         align="center"
-                        className={`mb-2 h-14 w-14 rounded-full bg-${step.color}-100 text-${step.color}-600 text-xl font-bold`}
+                        className={`mb-2 h-14 w-14 rounded-full ${step.bgColor} ${step.textColor} text-xl font-bold`}
                       >
                         {index + 1}
                       </Flex>
 
-                      <Flex
-                        justify="center"
-                        align="center"
-                        className={`mb-4 h-16 w-16 rounded-full bg-${step.color}-200`}
-                      >
+                      <Flex justify="center" align="center" className={`mb-4 h-16 w-16 rounded-full ${step.iconColor}`}>
                         <FIcon name={step.icon} size={28} />
                       </Flex>
 

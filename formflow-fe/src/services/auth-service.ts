@@ -1,10 +1,14 @@
 import {
   ActivateAccountRequest,
   ActivateAccountResponse,
+  ForgotPasswordRequest,
+  ForgotPasswordResponse,
   LoginRequest,
   LoginResponse,
   RegisterRequest,
-  RegisterResponse
+  RegisterResponse,
+  ResetPasswordRequest,
+  ResetPasswordResponse
 } from '../types/models'
 import { callApi } from '../utils/call-api'
 
@@ -33,5 +37,21 @@ export const authService = () => {
     })
   }
 
-  return { login, register, activateAccount }
+  const forgotPassword = (req: ForgotPasswordRequest) => {
+    return callApi<ForgotPasswordRequest, ForgotPasswordResponse>({
+      method: 'POST',
+      path: '/auth/forgot-password',
+      data: req
+    })
+  }
+
+  const resetPassword = (req: ResetPasswordRequest) => {
+    return callApi<ResetPasswordRequest, ResetPasswordResponse>({
+      method: 'POST',
+      path: '/auth/reset-password',
+      data: req
+    })
+  }
+
+  return { login, register, activateAccount, forgotPassword, resetPassword }
 }
