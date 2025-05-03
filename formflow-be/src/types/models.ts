@@ -34,3 +34,11 @@ export interface ResetPasswordRequest {
 export interface ResetPasswordResponse {
   message: string;
 }
+
+export interface ActivateAccountRequest {
+  token: string;
+}
+
+export interface ActivateAccountResponse {
+  message: string;
+}
