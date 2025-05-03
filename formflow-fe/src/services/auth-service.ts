@@ -1,4 +1,4 @@
-import { LoginRequest, LoginResponse } from '../types/models'
+import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../types/models'
 import { callApi } from '../utils/call-api'
 
 export const authService = () => {
@@ -10,5 +10,13 @@ export const authService = () => {
     })
   }
 
-  return { login }
+  const register = (req: RegisterRequest) => {
+    return callApi<RegisterRequest, RegisterResponse>({
+      method: 'POST',
+      path: '/auth/register',
+      data: req
+    })
+  }
+
+  return { login, register }
 }
