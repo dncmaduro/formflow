@@ -41,10 +41,10 @@ export class AuthService {
     if (!isMatch) throw new UnauthorizedException('Invalid credentials');
 
     const payload = { sub: user.id, email: user.email };
-    const access_token = this.jwtService.sign(payload, { expiresIn: '15m' });
-    const refresh_token = this.jwtService.sign(payload, { expiresIn: '7d' });
+    const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });
+    const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
-    return { access_token, refresh_token };
+    return { accessToken, refreshToken };
   }
 
   async forgotPassword({ email }: ForgotPasswordRequest): Promise<ForgotPasswordResponse> {
