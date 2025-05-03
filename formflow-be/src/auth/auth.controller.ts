@@ -32,7 +32,7 @@ export class AuthController {
     return this.authService.resetPassword(body);
   }
 
-  @ApiOperation({summary: 'Activate account'})
+  @ApiOperation({ summary: 'Activate account' })
   @Post('activate-account')
   async activateAccount(@Body() body: ActivateAccountDto) {
     return this.authService.activateAccount(body);
