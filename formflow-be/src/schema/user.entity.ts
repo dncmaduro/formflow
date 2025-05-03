@@ -17,6 +17,9 @@ export class User {
   @Column()
   role: string;
 
+  @Column({ default: false })
+  isActivated: boolean;
+
   @Column({ type: 'timestamp', nullable: true })
   lastLogin: Date;
 
