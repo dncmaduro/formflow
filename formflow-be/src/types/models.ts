@@ -42,3 +42,15 @@ export interface ActivateAccountRequest {
 export interface ActivateAccountResponse {
   message: string;
 }
+
+export interface GetMeResponse {
+  profile: {
+    id: string;
+    name: string;
+    dob: Date;
+    avatarUrl: string;
+    accountId: string;
+    createdAt: Date;
+    updatedAt: Date;
+  } | null;
+}
