@@ -12,6 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as ResetPasswordIndexImport } from './routes/reset-password/index'
+import { Route as ForgotPasswordIndexImport } from './routes/forgot-password/index'
 import { Route as AuthIndexImport } from './routes/auth/index'
 import { Route as ActivateAccountIndexImport } from './routes/activate-account/index'
 
@@ -20,6 +22,18 @@ import { Route as ActivateAccountIndexImport } from './routes/activate-account/i
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ResetPasswordIndexRoute = ResetPasswordIndexImport.update({
+  id: '/reset-password/',
+  path: '/reset-password/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ForgotPasswordIndexRoute = ForgotPasswordIndexImport.update({
+  id: '/forgot-password/',
+  path: '/forgot-password/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +74,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthIndexImport
       parentRoute: typeof rootRoute
     }
+    '/forgot-password/': {
+      id: '/forgot-password/'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/reset-password/': {
+      id: '/reset-password/'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -69,12 +97,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activate-account': typeof ActivateAccountIndexRoute
   '/auth': typeof AuthIndexRoute
+  '/forgot-password': typeof ForgotPasswordIndexRoute
+  '/reset-password': typeof ResetPasswordIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activate-account': typeof ActivateAccountIndexRoute
   '/auth': typeof AuthIndexRoute
+  '/forgot-password': typeof ForgotPasswordIndexRoute
+  '/reset-password': typeof ResetPasswordIndexRoute
 }
 
 export interface FileRoutesById {
@@ -82,14 +114,32 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/activate-account/': typeof ActivateAccountIndexRoute
   '/auth/': typeof AuthIndexRoute
+  '/forgot-password/': typeof ForgotPasswordIndexRoute
+  '/reset-password/': typeof ResetPasswordIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/activate-account' | '/auth'
+  fullPaths:
+    | '/'
+    | '/activate-account'
+    | '/auth'
+    | '/forgot-password'
+    | '/reset-password'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/activate-account' | '/auth'
-  id: '__root__' | '/' | '/activate-account/' | '/auth/'
+  to:
+    | '/'
+    | '/activate-account'
+    | '/auth'
+    | '/forgot-password'
+    | '/reset-password'
+  id:
+    | '__root__'
+    | '/'
+    | '/activate-account/'
+    | '/auth/'
+    | '/forgot-password/'
+    | '/reset-password/'
   fileRoutesById: FileRoutesById
 }
 
@@ -97,12 +147,16 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActivateAccountIndexRoute: typeof ActivateAccountIndexRoute
   AuthIndexRoute: typeof AuthIndexRoute
+  ForgotPasswordIndexRoute: typeof ForgotPasswordIndexRoute
+  ResetPasswordIndexRoute: typeof ResetPasswordIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivateAccountIndexRoute: ActivateAccountIndexRoute,
   AuthIndexRoute: AuthIndexRoute,
+  ForgotPasswordIndexRoute: ForgotPasswordIndexRoute,
+  ResetPasswordIndexRoute: ResetPasswordIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +171,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/activate-account/",
-        "/auth/"
+        "/auth/",
+        "/forgot-password/",
+        "/reset-password/"
       ]
     },
     "/": {
@@ -128,6 +184,12 @@ export const routeTree = rootRoute
     },
     "/auth/": {
       "filePath": "auth/index.tsx"
+    },
+    "/forgot-password/": {
+      "filePath": "forgot-password/index.tsx"
+    },
+    "/reset-password/": {
+      "filePath": "reset-password/index.tsx"
     }
   }
 }
