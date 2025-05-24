@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { FIcon } from '../FIcon'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation } from '@tanstack/react-query'
-import { authService } from '../../services/auth-service'
+import { useAuthService } from '../../services/auth-service'
 import { FToast } from '../FToast'
 
 type RegisterType = {
@@ -15,7 +15,7 @@ type RegisterType = {
 
 export const RegisterForm = () => {
   const [showPassword, { toggle: togglePassword }] = useDisclosure(false)
-  const { register } = authService()
+  const { register } = useAuthService()
 
   const {
     handleSubmit,

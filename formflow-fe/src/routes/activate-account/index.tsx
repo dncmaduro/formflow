@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
-import { authService } from '../../services/auth-service'
+import { useAuthService } from '../../services/auth-service'
 import { useMutation } from '@tanstack/react-query'
 import { ActivateAccountRequest } from '../../types/models'
 import { FToast } from '../../components/FToast'
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/activate-account/')({
 
 function RouteComponent() {
   const { token } = useSearch({ from: Route.fullPath })
-  const { activateAccount } = authService()
+  const { activateAccount } = useAuthService()
   const navigate = useNavigate()
 
   const { mutate: mutateActivate } = useMutation({

@@ -3,7 +3,7 @@ import { AppShell, Button, Card, Container, Flex, Group, Text, TextInput, Title 
 import { FIcon } from '../../components/FIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
-import { authService } from '../../services/auth-service'
+import { useAuthService } from '../../services/auth-service'
 import { ForgotPasswordRequest } from '../../types/models'
 import { FToast } from '../../components/FToast'
 
@@ -17,7 +17,7 @@ export const Route = createFileRoute('/forgot-password/')({
 
 function RouteComponent() {
   const navigate = useNavigate()
-  const { forgotPassword } = authService()
+  const { forgotPassword } = useAuthService()
 
   const {
     handleSubmit,

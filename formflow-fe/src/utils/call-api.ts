@@ -6,11 +6,6 @@ type AxiosCallApi<D> = {
   accessToken?: string
   customUrl?: string
   method: AxiosRequestConfig['method']
-  onClearAuth?: () => void
-}
-
-interface BaseResponse {
-  code: number
 }
 
 export async function callApi<D = unknown, T = unknown>({
@@ -18,9 +13,8 @@ export async function callApi<D = unknown, T = unknown>({
   data,
   accessToken,
   customUrl,
-  method,
-  onClearAuth
-}: AxiosCallApi<D>): Promise<AxiosResponse<T & BaseResponse>> {
+  method
+}: AxiosCallApi<D>): Promise<AxiosResponse<T>> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     Accept: 'application/json'
@@ -31,22 +25,16 @@ export async function callApi<D = unknown, T = unknown>({
   }
 
   try {
-    const response = await axios<T & BaseResponse>({
+    const response = await axios<T>({
       url: (customUrl ?? import.meta.env.VITE_BACKEND_URL) + path,
       headers,
       data,
       method
     })
 
-    if (response.data.code === 1401) {
-      onClearAuth?.()
-    }
-
     return response
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
-      onClearAuth?.()
-    }
+    console.error('API Error:', error)
     throw error
   }
 }

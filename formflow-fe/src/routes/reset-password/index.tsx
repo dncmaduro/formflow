@@ -4,7 +4,7 @@ import { FIcon } from '../../components/FIcon'
 import { Controller, useForm } from 'react-hook-form'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation } from '@tanstack/react-query'
-import { authService } from '../../services/auth-service'
+import { useAuthService } from '../../services/auth-service'
 import { ResetPasswordRequest } from '../../types/models'
 import { FToast } from '../../components/FToast'
 
@@ -25,7 +25,7 @@ function RouteComponent() {
   const { token } = useSearch({ from: Route.fullPath })
   const navigate = useNavigate()
   const [showPassword, { toggle: togglePassword }] = useDisclosure(false)
-  const { resetPassword } = authService()
+  const { resetPassword } = useAuthService()
 
   const {
     handleSubmit,

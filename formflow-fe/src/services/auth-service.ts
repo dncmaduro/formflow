@@ -12,7 +12,7 @@ import {
 } from '../types/models'
 import { callApi } from '../utils/call-api'
 
-export const authService = () => {
+export const useAuthService = () => {
   const login = (req: LoginRequest) => {
     return callApi<LoginRequest, LoginResponse>({
       method: 'POST',
