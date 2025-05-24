@@ -1,7 +1,7 @@
 import { Box, Button, Group, PasswordInput, Stack, TextInput, Text } from '@mantine/core'
 import { Controller, useForm } from 'react-hook-form'
 import { useDisclosure } from '@mantine/hooks'
-import { authService } from '../../services/auth-service'
+import { useAuthService } from '../../services/auth-service'
 import { useMutation } from '@tanstack/react-query'
 import { FToast } from '../FToast'
 import { useAuthStore } from '../../store/auth-store'
@@ -14,7 +14,7 @@ type LoginType = {
 
 export const LoginForm = () => {
   const [showPassword, { toggle: togglePassword }] = useDisclosure(false)
-  const { login } = authService()
+  const { login } = useAuthService()
   const { setAuth } = useAuthStore()
 
   const {
