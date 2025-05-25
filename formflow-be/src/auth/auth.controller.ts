@@ -1,7 +1,8 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ActivateAccountDto, ForgotPasswordDto, LoginDto, RegisterDto, ResetPasswordDto } from 'src/types/dto';
+import { ActivateAccountDto, ForgotPasswordDto, LoginDto, LogoutDto, RegisterDto, ResetPasswordDto } from 'src/types/dto';
+import { Request } from 'express';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -16,8 +17,10 @@ export class AuthController {
 
   @ApiOperation({ summary: 'User login' })
   @Post('login')
-  async login(@Body() body: LoginDto) {
-    return this.authService.login(body);
+  async login(@Body() body: LoginDto, @Req() req: Request) {
+    const ip = req.ip || req.connection?.remoteAddress;
+    const userAgent = req.headers['user-agent'] || 'unknown';
+    return this.authService.login({ ...body, ipAddress: ip, deviceId: userAgent });
   }
 
   @ApiOperation({ summary: 'Forgot password' })
@@ -36,5 +39,11 @@ export class AuthController {
   @Post('activate-account')
   async activateAccount(@Body() body: ActivateAccountDto) {
     return this.authService.activateAccount(body);
+  }
+
+  @ApiOperation({ summary: 'User logout' })
+  @Post('logout')
+  async logout(@Body() body: LogoutDto) {
+    return this.authService.logout(body);
   }
 }

@@ -88,7 +88,7 @@ export const AppHeader = () => {
             return (
               <Box key={index}>
                 <Menu.Label>{section.section}</Menu.Label>
-                {section.items.map(item => {
+                {section.items.map((item) => {
                   return (
                     <Menu.Item
                       leftSection={<FIcon name={item.icon} size={16} />}
@@ -118,7 +118,7 @@ export const AppHeader = () => {
         <Flex justify={'space-between'} align={'center'}>
           <AppIconLogo />
           <Group gap={16}>
-            {navItems.map(item => (
+            {navItems.map((item) => (
               <NavItem key={item.label} href={item.href} label={item.label} />
             ))}
             <ProfileMenu />

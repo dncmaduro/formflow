@@ -11,6 +11,8 @@ import {
   ForgotPasswordResponse,
   LoginRequest,
   LoginResponse,
+  LogoutRequest,
+  LogoutResponse,
   RegisterRequest,
   RegisterResponse,
   ResetPasswordRequest,
@@ -18,12 +20,20 @@ import {
 } from 'src/types/models';
 import { activationEmailTemplate } from 'src/utils/activation-mail-content';
 import transporter from 'src/utils/mail-transporter';
+import { RefreshToken } from 'src/schema/refresh_token.entity';
+
+interface LoginParams {
+  ipAddress?: string;
+  deviceId?: string;
+}
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(RefreshToken)
+    private refreshToken: Repository<RefreshToken>,
     private jwtService: JwtService,
   ) {}
 
@@ -78,7 +88,7 @@ export class AuthService {
     }
   }
 
-  async login({ username, password }: LoginRequest): Promise<LoginResponse> {
+  async login({ username, password, ipAddress, deviceId }: LoginRequest & LoginParams): Promise<LoginResponse> {
     const user = await this.userRepository.findOne({ where: { username } });
     if (!user) throw new UnauthorizedException('Invalid credentials');
 
@@ -90,6 +100,16 @@ export class AuthService {
     const payload = { sub: user.id, email: user.email };
     const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
+
+    const token = this.refreshToken.create({
+      token: refreshToken,
+      user,
+      userId: user.id,
+      deviceId,
+      ipAddress,
+    });
+
+    await this.refreshToken.save(token);
 
     return { accessToken, refreshToken };
   }
@@ -134,6 +154,16 @@ export class AuthService {
     } catch (err) {
       console.error(err);
       throw new BadRequestException('Invalid or expired token');
+    }
+  }
+
+  async logout({ refreshToken }: LogoutRequest): Promise<LogoutResponse> {
+    try {
+      await this.refreshToken.delete({ token: refreshToken });
+      return { message: 'Logout successful' };
+    } catch (err) {
+      console.error(err);
+      throw new BadRequestException('Invalid token');
     }
   }
 }

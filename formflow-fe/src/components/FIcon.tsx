@@ -4,10 +4,7 @@ interface Props {
   name: string
 }
 
-export const FIcon: React.FC<Props & TablerIcons.IconProps> = ({
-  name,
-  ...props
-}) => {
+export const FIcon: React.FC<Props & TablerIcons.IconProps> = ({ name, ...props }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Icon = (TablerIcons as any)[`Icon${name}`]
 

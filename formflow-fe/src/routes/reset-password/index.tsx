@@ -15,7 +15,7 @@ type ResetPasswordFormType = {
 
 export const Route = createFileRoute('/reset-password/')({
   component: RouteComponent,
-  validateSearch: search =>
+  validateSearch: (search) =>
     search as {
       token: string
     }
@@ -109,7 +109,7 @@ function RouteComponent() {
                   name="confirmPassword"
                   rules={{
                     required: 'Please confirm your password',
-                    validate: value => value === password || 'Passwords do not match'
+                    validate: (value) => value === password || 'Passwords do not match'
                   }}
                   render={({ field }) => (
                     <PasswordInput

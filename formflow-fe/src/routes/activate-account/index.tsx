@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 
 export const Route = createFileRoute('/activate-account/')({
   component: RouteComponent,
-  validateSearch: search =>
+  validateSearch: (search) =>
     search as {
       token: string
     }

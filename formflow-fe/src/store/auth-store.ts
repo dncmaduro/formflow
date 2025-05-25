@@ -15,7 +15,7 @@ interface SetAuthType {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    set => ({
+    (set) => ({
       accessToken: '',
       setAuth: (payload: SetAuthType) => {
         set({ accessToken: payload.accessToken })

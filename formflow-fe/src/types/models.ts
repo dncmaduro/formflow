@@ -1,56 +1,56 @@
 export interface LoginRequest {
-  username: string;
-  password: string;
+  username: string
+  password: string
 }
 
 export interface LoginResponse {
-  accessToken: string;
-  refreshToken: string;
+  accessToken: string
+  refreshToken: string
 }
 
 export interface RegisterRequest {
-  email: string;
-  username: string;
-  password: string;
+  email: string
+  username: string
+  password: string
 }
 
 export interface RegisterResponse {
-  message: string;
+  message: string
 }
 
 export interface ForgotPasswordRequest {
-  email: string;
+  email: string
 }
 
 export interface ForgotPasswordResponse {
-  message: string;
+  message: string
 }
 
 export interface ResetPasswordRequest {
-  token: string;
-  newPassword: string;
+  token: string
+  newPassword: string
 }
 
 export interface ResetPasswordResponse {
-  message: string;
+  message: string
 }
 
 export interface ActivateAccountRequest {
-  token: string;
+  token: string
 }
 
 export interface ActivateAccountResponse {
-  message: string;
+  message: string
 }
 
 export interface GetMeResponse {
   profile: {
-    id: string;
-    name: string;
-    dob: Date;
-    avatarUrl: string;
-    accountId: string;
-    createdAt: Date;
-    updatedAt: Date;
-  } | null;
+    id: string
+    name: string
+    dob: Date
+    avatarUrl: string
+    accountId: string
+    createdAt: Date
+    updatedAt: Date
+  } | null
 }
