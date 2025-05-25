@@ -19,6 +19,8 @@ import {
   RegisterResponse,
   ResetPasswordRequest,
   ResetPasswordResponse,
+  ValidateTokenRequest,
+  ValidateTokenResponse,
 } from 'src/types/models';
 import { activationEmailTemplate } from 'src/utils/activation-mail-content';
 import transporter from 'src/utils/mail-transporter';
@@ -166,6 +168,17 @@ export class AuthService {
     } catch (err) {
       console.error(err);
       throw new BadRequestException('Invalid token');
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async validate({ accessToken }: ValidateTokenRequest): Promise<ValidateTokenResponse> {
+    try {
+      this.jwtService.verify(accessToken);
+      return { isValid: true };
+    } catch (err) {
+      console.error(err);
+      return { isValid: false };
     }
   }
 

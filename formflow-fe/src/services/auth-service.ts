@@ -8,10 +8,14 @@ import {
   LoginResponse,
   LogoutRequest,
   LogoutResponse,
+  RefreshTokenRequest,
+  RefreshTokenResponse,
   RegisterRequest,
   RegisterResponse,
   ResetPasswordRequest,
-  ResetPasswordResponse
+  ResetPasswordResponse,
+  ValidateTokenRequest,
+  ValidateTokenResponse
 } from '../types/models'
 import { callApi } from '../utils/call-api'
 
@@ -67,5 +71,21 @@ export const useAuthService = () => {
     })
   }
 
-  return { login, register, activateAccount, forgotPassword, resetPassword, logout }
+  const refreshToken = (req: RefreshTokenRequest) => {
+    return callApi<RefreshTokenRequest, RefreshTokenResponse>({
+      method: 'POST',
+      path: '/auth/refresh-token',
+      data: req
+    })
+  }
+
+  const validateToken = (req: ValidateTokenRequest) => {
+    return callApi<ValidateTokenRequest, ValidateTokenResponse>({
+      method: 'POST',
+      path: '/auth/validate-token',
+      data: req
+    })
+  }
+
+  return { login, register, activateAccount, forgotPassword, resetPassword, logout, refreshToken, validateToken }
 }
