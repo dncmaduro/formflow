@@ -41,3 +41,8 @@ export class LogoutDto {
   @ApiProperty()
   refreshToken: string;
 }
+
+export class RefreshTokenDto {
+  @ApiProperty()
+  refreshToken: string;
+}

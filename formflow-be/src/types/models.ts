@@ -62,3 +62,12 @@ export interface LogoutRequest {
 export interface LogoutResponse {
   message: string;
 }
+
+export interface RefreshTokenRequest {
+  refreshToken: string;
+}
+
+export interface RefreshTokenResponse {
+  accessToken: string;
+  refreshToken: string;
+}

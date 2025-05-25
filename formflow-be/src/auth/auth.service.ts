@@ -13,6 +13,8 @@ import {
   LoginResponse,
   LogoutRequest,
   LogoutResponse,
+  RefreshTokenRequest,
+  RefreshTokenResponse,
   RegisterRequest,
   RegisterResponse,
   ResetPasswordRequest,
@@ -33,7 +35,7 @@ export class AuthService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     @InjectRepository(RefreshToken)
-    private refreshToken: Repository<RefreshToken>,
+    private refreshTokenRepository: Repository<RefreshToken>,
     private jwtService: JwtService,
   ) {}
 
@@ -101,7 +103,7 @@ export class AuthService {
     const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
-    const token = this.refreshToken.create({
+    const token = this.refreshTokenRepository.create({
       token: refreshToken,
       user,
       userId: user.id,
@@ -109,7 +111,7 @@ export class AuthService {
       ipAddress,
     });
 
-    await this.refreshToken.save(token);
+    await this.refreshTokenRepository.save(token);
 
     return { accessToken, refreshToken };
   }
@@ -159,8 +161,28 @@ export class AuthService {
 
   async logout({ refreshToken }: LogoutRequest, userId: string): Promise<LogoutResponse> {
     try {
-      await this.refreshToken.delete({ token: refreshToken, userId });
+      await this.refreshTokenRepository.delete({ token: refreshToken, userId });
       return { message: 'Logout successful' };
+    } catch (err) {
+      console.error(err);
+      throw new BadRequestException('Invalid token');
+    }
+  }
+
+  async refreshToken({ refreshToken }: RefreshTokenRequest): Promise<RefreshTokenResponse> {
+    try {
+      const token = await this.refreshTokenRepository.findOne({ where: { token: refreshToken } });
+      if (!token) throw new BadRequestException('Invalid token');
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { exp: _, iat: __, ...rest } = this.jwtService.verify(refreshToken);
+
+      const newAccessToken = this.jwtService.sign(rest, { expiresIn: '15m' });
+      const newRefreshToken = this.jwtService.sign(rest, { expiresIn: '7d' });
+
+      await this.refreshTokenRepository.update(token.id, { token: newRefreshToken });
+
+      return { accessToken: newAccessToken, refreshToken: newRefreshToken };
     } catch (err) {
       console.error(err);
       throw new BadRequestException('Invalid token');
