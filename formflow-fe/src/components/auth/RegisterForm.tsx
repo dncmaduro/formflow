@@ -98,7 +98,7 @@ export const RegisterForm = () => {
             name="confirmPassword"
             rules={{
               required: 'Please confirm your password',
-              validate: value => value === password || 'Passwords do not match'
+              validate: (value) => value === password || 'Passwords do not match'
             }}
             render={({ field }) => (
               <PasswordInput

@@ -1,9 +1,5 @@
 import './App.css'
-import {
-  RouterProvider,
-  createBrowserHistory,
-  createRouter
-} from '@tanstack/react-router'
+import { RouterProvider, createBrowserHistory, createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 import { Notifications } from '@mantine/notifications'
 import { ModalsProvider } from '@mantine/modals'
@@ -25,7 +21,6 @@ const theme = createTheme({
 })
 
 const queryClient = new QueryClient()
-
 
 function App() {
   return (

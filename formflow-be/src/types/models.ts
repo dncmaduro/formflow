@@ -54,3 +54,11 @@ export interface GetMeResponse {
     updatedAt: Date;
   } | null;
 }
+
+export interface LogoutRequest {
+  refreshToken: string;
+}
+
+export interface LogoutResponse {
+  message: string;
+}

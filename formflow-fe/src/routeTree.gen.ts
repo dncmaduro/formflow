@@ -23,37 +23,37 @@ import { Route as ActivateAccountIndexImport } from './routes/activate-account/i
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const ResetPasswordIndexRoute = ResetPasswordIndexImport.update({
   id: '/reset-password/',
   path: '/reset-password/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const ForgotPasswordIndexRoute = ForgotPasswordIndexImport.update({
   id: '/forgot-password/',
   path: '/forgot-password/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AuthIndexRoute = AuthIndexImport.update({
   id: '/auth/',
   path: '/auth/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const AppIndexRoute = AppIndexImport.update({
   id: '/app/',
   path: '/app/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 const ActivateAccountIndexRoute = ActivateAccountIndexImport.update({
   id: '/activate-account/',
   path: '/activate-account/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRoute
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -137,29 +137,10 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/activate-account'
-    | '/app'
-    | '/auth'
-    | '/forgot-password'
-    | '/reset-password'
+  fullPaths: '/' | '/activate-account' | '/app' | '/auth' | '/forgot-password' | '/reset-password'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/activate-account'
-    | '/app'
-    | '/auth'
-    | '/forgot-password'
-    | '/reset-password'
-  id:
-    | '__root__'
-    | '/'
-    | '/activate-account/'
-    | '/app/'
-    | '/auth/'
-    | '/forgot-password/'
-    | '/reset-password/'
+  to: '/' | '/activate-account' | '/app' | '/auth' | '/forgot-password' | '/reset-password'
+  id: '__root__' | '/' | '/activate-account/' | '/app/' | '/auth/' | '/forgot-password/' | '/reset-password/'
   fileRoutesById: FileRoutesById
 }
 
@@ -178,12 +159,10 @@ const rootRouteChildren: RootRouteChildren = {
   AppIndexRoute: AppIndexRoute,
   AuthIndexRoute: AuthIndexRoute,
   ForgotPasswordIndexRoute: ForgotPasswordIndexRoute,
-  ResetPasswordIndexRoute: ResetPasswordIndexRoute,
+  ResetPasswordIndexRoute: ResetPasswordIndexRoute
 }
 
-export const routeTree = rootRoute
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {

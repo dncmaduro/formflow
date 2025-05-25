@@ -30,7 +30,7 @@ export const LoginForm = () => {
 
   const { mutate: mutateLogin, isPending: isLoginPending } = useMutation({
     mutationFn: (values: LoginType) => login(values),
-    onSuccess: data => {
+    onSuccess: (data) => {
       FToast.success({
         title: 'Login Successful'
       })

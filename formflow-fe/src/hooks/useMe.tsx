@@ -7,7 +7,7 @@ export const useMe = () => {
   const { data, isFetching } = useQuery({
     queryKey: ['profile.getMe'],
     queryFn: getMe,
-    select: data => {
+    select: (data) => {
       return data.data.profile
     }
   })

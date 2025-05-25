@@ -36,3 +36,8 @@ export class ActivateAccountDto {
   @ApiProperty()
   token: string;
 }
+
+export class LogoutDto {
+  @ApiProperty()
+  refreshToken: string;
+}
