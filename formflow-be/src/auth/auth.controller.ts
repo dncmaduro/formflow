@@ -1,8 +1,16 @@
-import { Controller, Post, Body, Req } from '@nestjs/common';
+import { Controller, Post, Body, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ActivateAccountDto, ForgotPasswordDto, LoginDto, LogoutDto, RegisterDto, ResetPasswordDto } from 'src/types/dto';
+import {
+  ActivateAccountDto,
+  ForgotPasswordDto,
+  LoginDto,
+  LogoutDto,
+  RegisterDto,
+  ResetPasswordDto,
+} from 'src/types/dto';
 import { Request } from 'express';
+import { JwtAuthGuard } from 'src/strategies/jwt-auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -43,7 +51,9 @@ export class AuthController {
 
   @ApiOperation({ summary: 'User logout' })
   @Post('logout')
-  async logout(@Body() body: LogoutDto) {
-    return this.authService.logout(body);
+  @UseGuards(JwtAuthGuard)
+  async logout(@Body() body: LogoutDto, @Req() req) {
+    const userId = req.user.sub
+    return this.authService.logout(body, userId);
   }
 }
