@@ -6,6 +6,7 @@ import {
   ForgotPasswordDto,
   LoginDto,
   LogoutDto,
+  RefreshTokenDto,
   RegisterDto,
   ResetPasswordDto,
 } from 'src/types/dto';
@@ -53,7 +54,13 @@ export class AuthController {
   @Post('logout')
   @UseGuards(JwtAuthGuard)
   async logout(@Body() body: LogoutDto, @Req() req) {
-    const userId = req.user.sub
+    const userId = req.user.sub;
     return this.authService.logout(body, userId);
+  }
+
+  @ApiOperation({ summary: 'Refresh token' })
+  @Post('refresh-token')
+  async refreshToken(@Body() body: RefreshTokenDto) {
+    return this.authService.refreshToken(body);
   }
 }
