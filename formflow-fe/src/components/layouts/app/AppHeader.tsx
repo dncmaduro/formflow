@@ -4,6 +4,11 @@ import { Link, useNavigate } from '@tanstack/react-router'
 import { AppIconLogo } from './AppIconLogo'
 import { FIcon } from '../../FIcon'
 import { useAuthStore } from '../../../store/auth-store'
+import { FToast } from '../../FToast'
+import { LogoutRequest } from '../../../types/models'
+import { useMutation } from '@tanstack/react-query'
+import { useAuthService } from '../../../services/auth-service'
+import { getFromCookies } from '../../../utils/cookies'
 
 export const AppHeader = () => {
   const { meData } = useMe()
@@ -34,6 +39,24 @@ export const AppHeader = () => {
   const ProfileMenu = () => {
     const navigate = useNavigate()
     const { clearAuth } = useAuthStore()
+    const { logout } = useAuthService()
+    const refreshToken = getFromCookies('refreshToken')
+
+    const { mutate: mutateLogout } = useMutation({
+      mutationFn: (req: LogoutRequest) => logout(req),
+      onSuccess: () => {
+        FToast.success({
+          title: 'Logout Successful'
+        })
+        clearAuth()
+        navigate({ to: '/auth' })
+      },
+      onError: () => {
+        FToast.error({
+          title: 'Logout Failed'
+        })
+      }
+    })
 
     const menuItems = [
       {
@@ -68,7 +91,7 @@ export const AppHeader = () => {
             href: '/auth',
             color: 'red',
             onClick: () => {
-              clearAuth()
+              mutateLogout({ refreshToken })
             }
           }
         ]
@@ -88,7 +111,7 @@ export const AppHeader = () => {
             return (
               <Box key={index}>
                 <Menu.Label>{section.section}</Menu.Label>
-                {section.items.map((item) => {
+                {section.items.map(item => {
                   return (
                     <Menu.Item
                       leftSection={<FIcon name={item.icon} size={16} />}
@@ -118,7 +141,7 @@ export const AppHeader = () => {
         <Flex justify={'space-between'} align={'center'}>
           <AppIconLogo />
           <Group gap={16}>
-            {navItems.map((item) => (
+            {navItems.map(item => (
               <NavItem key={item.label} href={item.href} label={item.label} />
             ))}
             <ProfileMenu />

@@ -1,3 +1,4 @@
+import { useAuthStore } from '../store/auth-store'
 import {
   ActivateAccountRequest,
   ActivateAccountResponse,
@@ -5,6 +6,8 @@ import {
   ForgotPasswordResponse,
   LoginRequest,
   LoginResponse,
+  LogoutRequest,
+  LogoutResponse,
   RegisterRequest,
   RegisterResponse,
   ResetPasswordRequest,
@@ -13,6 +16,8 @@ import {
 import { callApi } from '../utils/call-api'
 
 export const useAuthService = () => {
+  const { accessToken } = useAuthStore()
+
   const login = (req: LoginRequest) => {
     return callApi<LoginRequest, LoginResponse>({
       method: 'POST',
@@ -53,5 +58,14 @@ export const useAuthService = () => {
     })
   }
 
-  return { login, register, activateAccount, forgotPassword, resetPassword }
+  const logout = (req: LogoutRequest) => {
+    return callApi<LogoutRequest, LogoutResponse>({
+      method: 'POST',
+      path: '/auth/logout',
+      accessToken,
+      data: req
+    })
+  }
+
+  return { login, register, activateAccount, forgotPassword, resetPassword, logout }
 }

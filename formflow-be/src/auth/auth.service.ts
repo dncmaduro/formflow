@@ -157,9 +157,9 @@ export class AuthService {
     }
   }
 
-  async logout({ refreshToken }: LogoutRequest): Promise<LogoutResponse> {
+  async logout({ refreshToken }: LogoutRequest, userId: string): Promise<LogoutResponse> {
     try {
-      await this.refreshToken.delete({ token: refreshToken });
+      await this.refreshToken.delete({ token: refreshToken, userId });
       return { message: 'Logout successful' };
     } catch (err) {
       console.error(err);
